@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser-arcade-physics.js
+
+
+
+"></script>
+</head>
+
+<body style="text-align: center;">
+    <h4>Classic "Snake" Game Build With Phaser Game Development Platform By Chen Karmely</h4>
+
+    <script>
+        var config = {
+            type: Phaser.AUTO,
+            width: 640,
+            height: 640,
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        var game = new Phaser.Game(config);
+
+        function preload() {
+            this.direction = Phaser.Math.Vector2.DOWN;
+            console.log(this.direction);
+        }
+        function create() {
+
+            this.body = []
+            this.lastMoveTime = 0;
+            this.moveInterval = 100;
+            this.tileSize = 16;
+
+            this.body.push(this.add.rectangle(this.game.config.width / 2, this.game.config.height / 2, this.tileSize, this.tileSize, 0xff0000).setOrigin(0))
+            this.apple = this.add.rectangle(64, 160, this.tileSize, this.tileSize, 0x00ff00).setOrigin(0);
+            this.apple.x =
+                Math.floor(Math.random() * (this.game.config.width / this.tileSize)) * this.tileSize;
+            this.apple.y =
+                Math.floor(Math.random() * (this.game.config.height / this.tileSize)) * this.tileSize;
+
+            this.input.keyboard.on('keydown', e => {
+                console.log(e.keyCode);
+                switch (e.keyCode) {
+                    case 37: //left
+                        if (this.direction !== Phaser.Math.Vector2.RIGHT) this.direction = Phaser.Math.Vector2.LEFT;
+                        break;
+                    case 38: //up
+                        if (this.direction !== Phaser.Math.Vector2.DOWN) this.direction = Phaser.Math.Vector2.UP;
+                        break;
+                    case 39: //right
+                        if (this.direction !== Phaser.Math.Vector2.LEFT) this.direction = Phaser.Math.Vector2.RIGHT;
+                        break;
+                    case 40: //down
+                        if (this.direction !== Phaser.Math.Vector2.UP) this.direction = Phaser.Math.Vector2.DOWN;
+                        break;
+                    case 65: //a
+                        this.add = true;
+                        break;
+                    case 32: //space
+                        this.stop = true;
+                        break;
+                }
+            });
+
+
+
+            // for some odd reasond hothing is being presented on screen whithout the line:
+            // "this.add.image(400, 300, 'star')"so i just replaced the X and Y to bottom right...
+            this.add.image(1200, 700, 'star');
+        }
+
+
+
+        function update(time) {
+            if (time >= this.lastMoveTime + this.moveInterval) {
+                this.lastMoveTime = time;
+                let x = this.body[0].x + this.direction.x * this.tileSize;
+                let y = this.body[0].y + this.direction.y * this.tileSize;
+                if (this.apple.x === x && this.apple.y === y) {
+                    this.body.push(this.add.rectangle(0, 0, this.tileSize , this.tileSize , 0xffffff).setOrigin(0));
+                    // this.add = false;
+                    // this.positionApple();
+                    this.apple.x =
+                        Math.floor(Math.random() * (this.game.config.width / this.tileSize)) * this.tileSize;
+                    this.apple.y =
+                        Math.floor(Math.random() * (this.game.config.height / this.tileSize)) * this.tileSize;
+
+                }
+                for (let index = this.body.length - 1; index > 0; index--) {
+                    this.body[index].x = this.body[index - 1].x;
+                    this.body[index].y = this.body[index - 1].y;
+                }
+                this.body[0].x = x;
+                this.body[0].y = y;
+                let bodyminushead = this.body.slice(1);
+                if (
+                    this.body[0].x < 0 ||
+                    this.body[0].x >= this.game.config.width ||
+                    this.body[0].y < 0 ||
+                    this.body[0].y >= this.game.config.height ||
+                    (bodyminushead.filter(b => b.x === this.body[0].x && b.y === this.body[0].y).length > 0)
+                ) {
+                    game.destroy(true, false)
+                    game = new Phaser.Game(config);
+
+
+
+                }
+            }
+
+
+        }
+
+
+    </script>
+
+</body>
+
+</html>
