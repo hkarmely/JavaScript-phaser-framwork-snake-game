@@ -5,8 +5,8 @@ Game is deployed on GitHub Pages and you can play it!
 Just Click:
 https://hkarmely.github.io/JavaScript-phaser-framwork-snake-game/
 
-#Project Reflection
-
+Project Reflection:
+--------------------
 This Game is a nice pratice for JavaScript phaser framework, 
 JavaScript Flow Control, 
 JavaScript Arrys handling and methods, 
