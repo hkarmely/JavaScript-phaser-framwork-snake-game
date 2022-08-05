@@ -16,4 +16,11 @@ This Game could actually be written in pure Javascript,
 
 In this games case, 
 Phaser framwork provies the peload, create and update functions, 
-which are a logic architecture for game development 
+which are a logic architecture for game development, 
+the update function could be replaced by setInterval and repeat JavaScript functions, 
+and preload and create could be replaced by regular and OOP JavaScript Functions. 
+
+Overall the Phaser Framework experience was nice, 
+Esspecially with <script></script> import, that enabled my 
+to encapsulate all the code in one HTML file, 
+instead of deploying a node/express server.
