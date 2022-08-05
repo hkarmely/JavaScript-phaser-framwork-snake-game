@@ -15,4 +15,5 @@ And more
 This Game could actually be written in pure Javascript, 
 
 In this games case, 
-Phaser framwork provies 
+Phaser framwork provies the peload, create and update functions, 
+which are a logic architecture for game development 
